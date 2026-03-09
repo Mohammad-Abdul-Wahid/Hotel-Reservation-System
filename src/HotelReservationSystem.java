@@ -2,19 +2,20 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class HotelReservationSystem {
-    private static final String url = "jdbc:mysql://localhost:3306/hotel_db";
-    private static final String username = "root";
-    private static final String password = "Wahid@123";
+    private static final String url = "jdbc:mysql://localhost:3306/hotel_db";//Database jdbc path from mysql
+    private static final String username = "root";//Your SQL username
+    private static final String password = "*****";//Your SQL password
 
     static void main() throws ClassNotFoundException, SQLException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");//It will load all jdbc driver from package com.mysql.cj
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
         try {
-            Connection connection = DriverManager.getConnection(url, username, password);
+            Connection connection = DriverManager.getConnection(url, username, password);//create a connection
             Scanner sc = new Scanner(System.in);
+            //Functions of Hotel Reservation System
             while (true) {
                 System.out.println("HOTEL MANAGEMENT SYSTEM");
                 System.out.println("1. Reserve a room");
@@ -61,6 +62,7 @@ public class HotelReservationSystem {
         }
     }
 
+    //It reserves a room for a guest.
     private static void reserveRoom(Connection connection, Scanner scanner) {
         System.out.println("Enter guest name: ");
         String name = scanner.next();
@@ -87,7 +89,7 @@ public class HotelReservationSystem {
             throw new RuntimeException(e);
         }
     }
-
+    //It gives all the Reservations details
     private static void viewReservation(Connection connection) {
         String query = "select * from reservations";
         try {
@@ -110,6 +112,7 @@ public class HotelReservationSystem {
         }
     }
 
+    //It will return the room number of the guest using reservation id
     private static void getRoomNumber(Connection connection, Scanner scanner) {
         System.out.println("Enter your reservation ID: ");
         int reservationId = scanner.nextInt();
@@ -132,6 +135,7 @@ public class HotelReservationSystem {
         }
     }
 
+    //It will update the details of the reservation of the guests by taking reservation id as input
     private static void updateReservation(Connection connection, Scanner scanner) {
         System.out.println("Enter reservation id: ");
         int reservationId = scanner.nextInt();
@@ -165,6 +169,7 @@ public class HotelReservationSystem {
         }
     }
 
+    //It will delete the reservation of the guest by taking reservation id as input
     private static void deleteReservation(Connection connection, Scanner scanner) {
         System.out.println("Enter guest reservation id: ");
         int reservationId = scanner.nextInt();
@@ -187,6 +192,7 @@ public class HotelReservationSystem {
         }
     }
 
+    //It will check that the reservation exists in the database or not by taking reservation id as input
     private static boolean reservationExists(Connection connection, int registrationId) {
         try{
             String query="select 1 from reservations where reservation_id=?";
@@ -203,6 +209,7 @@ public class HotelReservationSystem {
         }
     }
 
+    //It will print a thanking statement and wait for 2.5 seconds.
     private static void exit() {
         try {
             System.out.print("Thanks for using my hotel management system");
